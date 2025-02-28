@@ -13,12 +13,7 @@ contract SimpleToken is ERC20 {
         _;
     }
 
-    constructor(uint256 _initialSupply) ERC20("SimpleToken", "STK") {
-        owner = msg.sender;
-        initialSupply = _initialSupply;
-        _mint(msg.sender, _initialSupply);
-        approve(msg.sender, initialSupply);
-    }
+    constructor(uint256 _initialSupply) ERC20("SimpleToken", "STK") {}
 
     function mint(address _to, uint256 _amount) external onlyOwner {
         _mint(_to, _amount);

@@ -11,6 +11,8 @@ contract SimpleStaking is ReentrancyGuard {
 
     address owner;
 
+    //
+
     constructor(address _stakingToken, address _rewardToken) {
         owner = msg.sender;
         stakingToken = IERC20(_stakingToken);
@@ -21,4 +23,12 @@ contract SimpleStaking is ReentrancyGuard {
         require(msg.sender == owner, "not authorized");
         _;
     }
+
+    //o functie cu care sa punem la stake;
+
+    //o functie de withraw stake;
+
+    //o modalitate de calcul pentru rewards;
+
+    //o functie de calcul pt rewards
 }

@@ -31,6 +31,7 @@ contract SimpleStaking is ReentrancyGuard {
         rewardRate = _rewardRate;
         stakingToken = IERC20(_stakingToken);
         rewardToken = IERC20(_rewardToken);
+        lastRewardTimestamp = block.timestamp;
     }
 
     modifier onlyOwner() {

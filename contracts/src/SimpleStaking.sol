@@ -11,12 +11,12 @@ contract SimpleStaking is ReentrancyGuard {
 
     uint256 immutable PRECISION = 1e18;
 
-    address owner;
+    address public owner;
     uint256 public rewardRate;
     // the total amount of staked tokens
     uint256 totalSupply;
     //last time rewards were distributed
-    uint256 public lastRewardTimestamp;
+    uint256 lastRewardTimestamp;
     // (reward rate * dt * 1e18)/ totalSupply
     uint256 rewardPerTokenStored;
     // how much did each user stake
@@ -26,8 +26,9 @@ contract SimpleStaking is ReentrancyGuard {
     //used to make sure each user can only withdraw from the point the stake is made
     mapping(address => uint256) rewardPerTokenDebt;
 
-    constructor(address _stakingToken, address _rewardToken) {
+    constructor(address _stakingToken, address _rewardToken, uint256 _rewardRate) {
         owner = msg.sender;
+        rewardRate = _rewardRate;
         stakingToken = IERC20(_stakingToken);
         rewardToken = IERC20(_rewardToken);
     }

@@ -51,7 +51,7 @@ contract SimpleStaking is ReentrancyGuard {
 
     function stake(uint256 _amount) external updateRewardPerToken(msg.sender) {
         require(_amount > 0, "amount must be greater than 0");
-        balanceOf[msg.sender] = _amount;
+        balanceOf[msg.sender] += _amount;
         totalSupply += _amount;
         stakingToken.transferFrom(msg.sender, address(this), _amount);
     }
@@ -60,6 +60,7 @@ contract SimpleStaking is ReentrancyGuard {
         require(_amount > 0, "amount must be greater than 0");
         require(_amount <= balanceOf[msg.sender], "not enough balance");
         balanceOf[msg.sender] -= _amount;
+        totalSupply -= _amount;
         stakingToken.transfer(msg.sender, _amount);
     }
 
@@ -76,7 +77,7 @@ contract SimpleStaking is ReentrancyGuard {
             ((balanceOf[_account] * (_rewardPerToken() - rewardPerTokenDebt[_account])) / PRECISION) + rewards[_account];
     }
 
-    function getReward() external updateRewardPerToken(msg.sender) {
+    function getReward() external updateRewardPerToken(msg.sender) nonReentrant {
         uint256 reward = rewards[msg.sender];
         if (reward > 0) {
             rewards[msg.sender] = 0;
